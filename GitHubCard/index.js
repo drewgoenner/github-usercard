@@ -41,13 +41,13 @@ axios.get('https://api.github.com/users/drewgoenner')
   
   .then ((followers) => {
     // console.log ("Followers Info: ", followers.data);
-    const followerUser = [];
-    followers.data.forEach(getLogin => {
-    followerUser.push(`${getLogin.login}`)
+    // const followerUser = [];
+    // followers.data.forEach(getLogin => {
+    // followerUser.push(`${getLogin.login}`)
     // console.log(followerUser)
 
-    followerUser.forEach(user => {
-      axios.get(`https://api.github.com/user/${user}`)
+    followers.data.forEach(user => {
+      axios.get(user.url)
       .then ((response) => {
         const followerCard = createCard(response.data);
         const cardList = document.querySelector('.cards');
@@ -57,7 +57,7 @@ axios.get('https://api.github.com/users/drewgoenner')
 
      
     })
-    })
+    
   
 
 .catch((err) => {
