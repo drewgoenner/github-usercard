@@ -2,7 +2,7 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-axios.get('https://api.github.com/users/drewgoenner')
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -24,9 +24,47 @@ axios.get('https://api.github.com/users/drewgoenner')
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+axios.get('https://api.github.com/users/drewgoenner')
+.then( (response) => {
+  console.log(response);
+  const myCard = response.data
+  console.log("My Info: ", myCard)
+  
 
-function createCard(object) {
+  const cardList = document.querySelector('.cards');
+  const cardInfo = createCard(myCard);
+  cardList.appendChild(cardInfo);
+  })
+.catch((err) => {
+  console.log(err);
+})
+
+const followersArray = [
+  'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell'
+
+];
+
+followersArray.forEach(user => {
+  axios.get(`https://api.github.com/users/${user}`)
+    .then ((response) => {
+      const otherCard = createCard(response.data);
+      const cardList = document.querySelector('.cards');
+      cardList.appendChild(otherCard)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  
+})
+
+const cardList = document.querySelector('.cards');
+console.log(cardList);
+
+function createCard(element) {
 //create elements
   const card1 = document.createElement('div');
   const img1 = document.createElement('img');
@@ -59,8 +97,17 @@ function createCard(object) {
   user1.classList.add("username");
 
 //add content
+img1.src = element.avatar_url;
+name1.textContent = element.name;
+user1.textContent = element.login;
+location1.textContent = element.location;
+const theProfAdd = element.url
+profAdd.innerHTML = theProfAdd.link(element.url);
+followers1.textContent = `Followers: ${element.followers}`;
+following1.textContent = `Following: ${element.following}`;
+bio1.textContent = element.bio;
 
-
+return card1;
 }
 
 /* Step 3: Create a function that accepts a single object as its only argument,
