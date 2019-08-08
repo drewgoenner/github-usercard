@@ -24,6 +24,7 @@
           user, and adding that card to the DOM.
 */
 
+//create and post my card
 axios.get('https://api.github.com/users/drewgoenner')
 .then( (response) => {
   console.log(response);
@@ -36,15 +37,11 @@ axios.get('https://api.github.com/users/drewgoenner')
   cardList.appendChild(cardInfo);
   })
 
+
+  //aut add followers when run
   axios.get('https://api.github.com/users/drewgoenner/followers')
   
-  
   .then ((followers) => {
-    // console.log ("Followers Info: ", followers.data);
-    // const followerUser = [];
-    // followers.data.forEach(getLogin => {
-    // followerUser.push(`${getLogin.login}`)
-    // console.log(followerUser)
 
     followers.data.forEach(user => {
       axios.get(user.url)
