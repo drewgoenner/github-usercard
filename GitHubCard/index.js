@@ -2,7 +2,7 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-
+axios.get('https://api.github.com/users/drewgoenner')
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -25,6 +25,43 @@
 */
 
 const followersArray = [];
+
+function createCard(object) {
+//create elements
+  const card1 = document.createElement('div');
+  const img1 = document.createElement('img');
+  const info1 = document.createElement('div');
+  const name1 = document.createElement('h3')
+  const user1 = document.createElement('p');
+  const location1 = document.createElement('p');
+  const profile1 = document.createElement('p');
+  const profAdd = document.createElement('a')
+  const followers1 = document.createElement('p');
+  const following1 = document.createElement('p');
+  const bio1 = document.createElement('p');
+  
+//append elements
+  card1.appendChild(img1);
+  card1.appendChild(info1);
+  info1.appendChild(name1);
+  info1.appendChild(user1);
+  info1.appendChild(location1)
+  info1.appendChild(profile1);
+  profile1.appendChild(profAdd);
+  info1.appendChild(followers1);
+  info1.appendChild(following1);
+  info1.appendChild(bio1);
+
+//add classes
+  card1.classList.add("card");
+  info1.classList.add("card-info");
+  name1.classList.add("name");
+  user1.classList.add("username");
+
+//add content
+
+
+}
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
