@@ -35,6 +35,38 @@ axios.get('https://api.github.com/users/drewgoenner')
   const cardInfo = createCard(myCard);
   cardList.appendChild(cardInfo);
   })
+
+  axios.get('https://api.github.com/users/drewgoenner/followers')
+  .then ((followers) => {
+    // console.log ("Followers Info: ", followers.data);
+    const followerUser = [];
+    followers.data.forEach(getLogin => {
+    followerUser.push(`${getLogin.login}`)
+    console.log(followerUser)
+
+      // axios.get(`https://api.github.com/users/${login}`)
+      // const followerCard = login.data;
+      // console.log("Followers Info: ", followerCard);
+    })
+    })
+  
+
+  // axios.get('https://api.github.com/users/drewgoenner/followers')
+  // .then ((response) => {
+  //   console.log(response);
+  //   const followerArray = response.data;
+  //   console.log(followerArray);
+  //   followerArray.forEach (login => {
+  //     axios.get(`https://api.github.com/users/${login}`)
+  //     .then ((user) => {
+  //       const followerCard = user.data;
+  //       console.log("Followers Info:", followerCard);
+  //       const cardList = document.querySelector('.cards');
+  //       const cardInfo = createCard(followerCard);
+  //       cardList.appendChild(cardInfo);
+  //     })
+  //   })
+  // })
 .catch((err) => {
   console.log(err);
 })
