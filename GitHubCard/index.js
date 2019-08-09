@@ -24,7 +24,114 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+//create and post my card
+axios.get('https://api.github.com/users/drewgoenner')
+.then( (response) => {
+  console.log(response);
+  const myCard = response.data
+  console.log("My Info: ", myCard)
+  
+
+  const cardList = document.querySelector('.cards');
+  const cardInfo = createCard(myCard);
+  cardList.appendChild(cardInfo);
+  })
+
+
+  //aut add followers when run
+  axios.get('https://api.github.com/users/drewgoenner/followers')
+  
+  .then ((followers) => {
+
+    followers.data.forEach(user => {
+      axios.get(user.url)
+      .then ((response) => {
+        const followerCard = createCard(response.data);
+        const cardList = document.querySelector('.cards');
+        cardList.appendChild(followerCard)
+      })
+    })
+
+     
+    })
+    
+  
+
+.catch((err) => {
+  console.log(err);
+})
+
+const followersArray = [
+  'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'bigknell'
+
+];
+
+followersArray.forEach(user => {
+  axios.get(`https://api.github.com/users/${user}`)
+    .then ((response) => {
+      const otherCard = createCard(response.data);
+      const cardList = document.querySelector('.cards');
+      cardList.appendChild(otherCard)
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  
+})
+
+const cardList = document.querySelector('.cards');
+console.log(cardList);
+
+function createCard(element) {
+//create elements
+  const card1 = document.createElement('div');
+  const img1 = document.createElement('img');
+  const info1 = document.createElement('div');
+  const name1 = document.createElement('h3')
+  const user1 = document.createElement('p');
+  const location1 = document.createElement('p');
+  const profile1 = document.createElement('p');
+  const profAdd = document.createElement('a')
+  const followers1 = document.createElement('p');
+  const following1 = document.createElement('p');
+  const bio1 = document.createElement('p');
+  
+//append elements
+  card1.appendChild(img1);
+  card1.appendChild(info1);
+  info1.appendChild(name1);
+  info1.appendChild(user1);
+  info1.appendChild(location1)
+  info1.appendChild(profile1);
+  profile1.appendChild(profAdd);
+  info1.appendChild(followers1);
+  info1.appendChild(following1);
+  info1.appendChild(bio1);
+
+//add classes
+  card1.classList.add("card");
+  info1.classList.add("card-info");
+  name1.classList.add("name");
+  user1.classList.add("username");
+
+//add content
+img1.src = element.avatar_url;
+name1.textContent = element.name;
+user1.textContent = element.login;
+location1.textContent = element.location;
+const theProfAdd = element.url;
+profAdd.textContent = "Proile: "
+profAdd.innerHTML += theProfAdd.link(element.url);
+followers1.textContent = `Followers: ${element.followers}`;
+following1.textContent = `Following: ${element.following}`;
+bio1.textContent = element.bio;
+
+return card1;
+}
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
